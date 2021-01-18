@@ -1,71 +1,66 @@
 // Global variables 
 var docTemplate = "EXAMPLEID123"; // *** replace with your template ID ***
-var docName = "DOCUMENTNAME"; // *** replace with your template name ***
+var docName = "EXAMPLE NAME"; // *** replace with your template name ***
 
-	function onFormSubmit(e) { // add an onsubmit trigger
-		// Set variables to the associated columns in the spreadsheet
-		var customerName = e.values[1];
-		var customerEmail = e.values[2];
-		var column3 = e.values[3];
-		var column4 = e.values[4];
-		var column5 = e.values[5];
-		var column6 = e.values[6];
-		var column7 = e.values[7];
+function onFormSubmit(e) { // add an onsubmit trigger
+    // Set variables to the associated columns in the spreadsheet
+    var customerName = e.values[1];
+    var customerEmail = e.values[2];
+    var column3 = e.values[3];
+    var column4 = e.values[4];
+    var column5 = e.values[5];
+    var column6 = e.values[6];
+    var column7 = e.values[7];
 
-		// Get the document template, copy it as a new temperorary document,  then save the document's ID
-		var copyId =
-			DocsList.getFileById(docTemplate)
-			//Save copy of file in Google Drive with format "docName_customerName"
-			.makeCopy(docName + '_' + customerName)
-			.getId();
+    // Get the document template, copy it as a new temperorary document,  then save the document's ID
+    var copyId =
+        DriveApp.getFileById(docTemplate)
+        //Save copy of file in Google Drive with format "docName_customerName"
+        .makeCopy(docName + '_' + customerName)
+        .getId();
 
-		// Open the temporary document
-		var copyDoc = DocumentApp.openById(copyId);
+    // Open the temporary document
+    var copyDoc = DocumentApp.openById(copyId);
 
-		// Get the document’s body section
-		var copyBody = copyDoc.getActiveSection();
+    // Get the document’s body section
+    var copyBody = copyDoc.getActiveSection();
 
-		// Define the placeholder keys that are to be replaced as well as the variables to replace them with
-		copyBody.replaceText('keyName', customer_name);
-		copyBody.replaceText('key2', key2Text);
-		copyBody.replaceText('key3', key3Text);
-		copyBody.replaceText('key4', key4Text);
-		copyBody.replaceText('key5', key5Text);
-		copyBody.replaceText('key6', key6Text);
-		var todaysDate = Utilities.formatDate(new Date(), "GMT", "MM/dd/yyyy");
-		copyBody.replaceText('keyTodaysDate', todaysDate);
+    // Define the placeholder keys that are to be replaced as well as the variables to replace them with
+    copyBody.replaceText('keyName', customerName);
+    copyBody.replaceText('keyEmail', customerEmail);
+    copyBody.replaceText('key3', column3);
+    copyBody.replaceText('key4', column4);
+    copyBody.replaceText('key5', column5);
+    copyBody.replaceText('key6', column6);
+    copyBody.replaceText('key7', column7);
+    var todaysDate = Utilities.formatDate(new Date(), "GMT", "MM/dd/yyyy");
+    copyBody.replaceText('keyTodaysDate', todaysDate);
 
-		// Save and close the temporary document
-		copyDoc.saveAndClose();
+    // Save and close the temporary document
+    copyDoc.saveAndClose();
 
-		// Convert the temporary document to PDF using the getAs blob conversion
-		var pdf = DocsList.getFileById(copyId).getAs("application/pdf");
+    // Convert the temporary document to PDF using the getAs blob conversion
+    var pdf = DriveApp.getFileById(copyId).getAs("application/pdf");
 
-		//This next part is only necessary if you want the document to go to a folder other than the Root folder in Drive
-		var folder = DocsList.getFolder('FOLDER NAME');
-		var movefile = DocsList.createFile(pdf);
-		movefile.addToFolder(folder);
-		movefile.removeFromFolder(DocsList.getRootFolder());
+    // Set email subject and body content
+    var subject = "ENTER SUBJECT HERE";
+    var body =
+        "Hello " + customerName + "," + "<br /><br />" +
+        "BODY PARAGRAPH 1 TEXT" + "<br /><br />" +
+        "BODY PARAGRAPH 2 TEXT" + "<br /><br />" +
+        "SALUTATION," + "<br /><br />" +
+        column3 + ", DEPARTMENT" + "<br />" + "ExampleEmail@example.com";
 
-		// Set email subject and body content
-		var subject = "ENTER SUBJECT HERE";
-		var body =
-			"Hello " + customerName + "," + "<br /><br />" +
-			"BODY PARAGRAPH 1 TEXT" + "<br /><br />" +
-			"BODY PARAGRAPH 2 TEXT" + "<br /><br />" +
-			"SALUTATION," + "<br /><br />" +
-			column3 + ", DEPARTMENT" + "<br />" + "ExampleEmail@example.com";
+    // Set email to be CCd
+    var cc = "";
 
-		// Set email to be CCd
-		var cc = "ExampleCCEmail@example.com";
+    // Attach the PDF and send the email
+    MailApp.sendEmail(customerEmail, subject, body, {
+        htmlBody: body,
+        attachments: pdf,
+        cc: cc
+    });
 
-		// Attach the PDF and send the email
-		MailApp.sendEmail(customer_email, subject, body, {
-			htmlBody: body,
-			attachments: pdf,
-			cc: cc
-		});
-
-		// Delete temp file
-		DocsList.getFileById(copyId).setTrashed(true);
-	}
+    // Delete temp file
+    DriveApp.getFileById(copyId).setTrashed(true);
+}

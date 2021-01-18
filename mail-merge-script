@@ -1,6 +1,6 @@
 // Global variables 
 var docTemplate = "EXAMPLEID123"; // *** replace with your template ID ***
-var docName = "DOCUMENTNAME"; ** * replace with your template name ** *
+var docName = "DOCUMENTNAME"; // *** replace with your template name ***
 
 	function onFormSubmit(e) { // add an onsubmit trigger
 		// Set variables to the associated columns in the spreadsheet

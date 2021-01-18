@@ -45,11 +45,11 @@ function onFormSubmit(e) { // add an onsubmit trigger
     // Set email subject and body content. You can use variables such as customerName, customerEmail, column3
     var subject = "ENTER SUBJECT HERE";
     var body =
-        "Hello " + customerName + "," + "<br /><br />" +
-        "BODY PARAGRAPH 1 TEXT" + "<br /><br />" +
-        "BODY PARAGRAPH 2 TEXT" + "<br /><br />" +
-        "SALUTATION," + "<br /><br />" +
-        "NAME, DEPARTMENT" + "<br />" + "ExampleEmail@example.com";
+        "Hello " + customerName + "," + "<br/><br/>" +
+        "BODY PARAGRAPH 1 TEXT" + "<br/><br/>" +
+        "BODY PARAGRAPH 2 TEXT" + "<br/><br/>" +
+        "SALUTATION," + "<br/><br/>" +
+        "NAME, DEPARTMENT" + "<br/>" + "ExampleEmail@example.com";
 
     // Set email to be CCd
     var cc = "";

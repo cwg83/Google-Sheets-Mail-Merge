@@ -8,5 +8,5 @@ On the Google Sheet with the placeholder columns and keys: Click Tools > Script 
 
 You'll need to replace EXAMPLEID123 and DOCUMENTNAME with the ID and name of your template document, respectively. The ID of a document can be derived from the URL:
 ```
-https://docs.google.com/document/d/documentId/edit
+https://docs.google.com/document/d/DOCUMENTID/edit
 ```

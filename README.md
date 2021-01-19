@@ -12,4 +12,5 @@ This is a Google Apps script written in Javascript used for mail merging an emai
 https://docs.google.com/document/d/DOCUMENTID/edit
 ```
 6. Optional: Add an email to the cc variable that will be CCd when the email is sent.
+
 You will need to give permission to the script in order for it to send emails on your behalf as well as view and utilize other documents in your drive.
